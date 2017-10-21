@@ -1,0 +1,109 @@
+" Color scheme
+colorscheme jellybeans+
+let g:solarized_termcolors=256
+set colorcolumn=120
+
+" CtrlP configuration
+set wildignore+=*/tmp/*,*/spec/fixtures/cassettes/*,*/app/assets/images/*,*/public/*
+
+" Strip trailing whitespace
+function! <SID>StripTrailingWhitespaces()
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  %s/\s\+$//e
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" custom status line
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+
+" Syntax highlighting for deface/jbuilder files
+au BufNewFile,BufRead *.erb.deface set filetype=eruby
+au BufNewFile,BufRead *.json.jbuilder set filetype=ruby
+
+" Set up vim-test
+nmap <silent> <leader>r :TestFile<CR>
+nmap <silent> <leader>R :TestNearest<CR>
+let g:test#strategy = 'vimux'
+
+" Run specs in split screen
+let g:vroom_use_vimux = 1
+let g:VimuxOrientation = 'h'
+if (&columns > 200)
+  let g:VimuxHeight = 30
+else
+  let g:VimuxHeight = 50
+endif
+
+" Use ctrl + s to save
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR><Esc>
+inoremap <silent> <C-S>         <C-O>:update<CR><Esc>
+
+" Use ctrl + q to close
+noremap <silent> <C-Q>          :q<CR>
+
+" Open notes
+noremap <silent> <leader>q          :10split ~/.dotfiles/notes.md <CR>
+
+" Open memo
+noremap <silent> <leader>m          :10split ~/.dotfiles/memo.md <CR>
+
+" Auto-save and push notes file
+autocmd BufWritePost * execute ':silent ! if [[ % == *.dotfiles/notes.md ]]; then gitdir=$(dirname %)/.git; worktree=$(dirname %); git --git-dir=$gitdir --work-tree=$worktree add % ; git --git-dir=$gitdir --work-tree=$worktree commit -m "Update notes.md"; git --git-dir=$gitdir --work-tree=$worktree push; fi > /dev/null 2>&1'
+
+" Disable SCSS linting (too slow and often wrong)
+let g:syntastic_scss_checkers=[]
+
+" Move from diff to Gstatus view and stage file by pressing - twice
+noremap <silent> - <C-w>k
+
+" indent private methods
+let g:ruby_indent_access_modifier_style="indent"
+
+" Disable javascript snippets in html
+let g:snipMate.scope_aliases['html'] = ''
+
+" Use relative numbering
+set rnu
+
+" Use coffelint options if present
+let coffee_lint_options = '-f .coffeelint.json'
+
+"
+set clipboard=unnamed
+
+" Create window splits easier. The default
+" way is Ctrl-w,v and Ctrl-w,s. I remap
+" this to vv and ss
+nnoremap <silent> vv <C-w>v
+nnoremap <silent> ss <C-w>s
+
+" The cursor mode for inser
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" Check spelling by default
+set spelllang=en
+setlocal spell spelllang=en_us
+
+" Close Nerdtree when we open a file
+let NERDTreeQuitOnOpen=1
+
+"Vim 80 column layout concerns
+"
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+"see full path of the current file?
+set statusline+=%F
+
+" map '' to vi"
+nnoremap <silent> '' vi"

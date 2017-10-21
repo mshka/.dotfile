@@ -1,0 +1,6 @@
+.DS_Store
+.sass-cache
+.rbenv-version
+.trello_flow
+tags
+dump.rdb
