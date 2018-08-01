@@ -7,6 +7,8 @@
   co = checkout
   df = diff
   lg = log -p
+	ss = status
+	mm = commit
 [color]
   branch = auto
   diff = auto

@@ -51,3 +51,10 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 if type "rbenv" > /dev/null; then
   eval "$(rbenv init -)"
 fi
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$PATH"
+
+# Load git prune lib https://github.com/Seinh/git-prune
+plugins=(git git-prune)
