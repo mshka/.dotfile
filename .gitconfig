@@ -9,6 +9,7 @@
   lg = log -p
 	ss = status
 	mm = commit
+  dfno = diff --name-only
 [color]
   branch = auto
   diff = auto

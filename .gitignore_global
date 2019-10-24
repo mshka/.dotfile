@@ -2,5 +2,6 @@
 .sass-cache
 .rbenv-version
 .trello_flow
+.scss-lint.yml
 tags
 dump.rdb

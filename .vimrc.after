@@ -49,12 +49,6 @@ inoremap <silent> <C-S>         <C-O>:update<CR><Esc>
 " Use ctrl + q to close
 noremap <silent> <C-Q>          :q<CR>
 
-" Open notes
-noremap <silent> <leader>q          :10split ~/.dotfiles/notes.md <CR>
-
-" Open memo
-noremap <silent> <leader>m          :10split ~/.dotfiles/memo.md <CR>
-
 " Auto-save and push notes file
 autocmd BufWritePost * execute ':silent ! if [[ % == *.dotfiles/notes.md ]]; then gitdir=$(dirname %)/.git; worktree=$(dirname %); git --git-dir=$gitdir --work-tree=$worktree add % ; git --git-dir=$gitdir --work-tree=$worktree commit -m "Update notes.md"; git --git-dir=$gitdir --work-tree=$worktree push; fi > /dev/null 2>&1'
 
@@ -69,9 +63,6 @@ let g:ruby_indent_access_modifier_style="indent"
 
 " Disable javascript snippets in html
 let g:snipMate.scope_aliases['html'] = ''
-
-" Use relative numbering
-set rnu
 
 " Use coffelint options if present
 let coffee_lint_options = '-f .coffeelint.json'
@@ -117,3 +108,25 @@ noremap <silent> <leader>gp :Git push<CR>
 
 " Show hidden files in Nerd Tree
 let NERDTreeShowHidden=1
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind \nf to reveal in nerdtree
+nnoremap \nf :NERDTreeFind<CR>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>

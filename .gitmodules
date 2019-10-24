@@ -28,3 +28,9 @@
 [submodule ".janus/fzf.vim"]
 	path = .janus/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
+[submodule ".janus/nerdtree-git-plugin"]
+  path = .janus/nerdtree-git-plugin
+  url = "https://github.com/Xuyuanp/nerdtree-git-plugin.git"
+[submodule ".janus/vim-airline"]
+  path = .janus/vim-airline
+  url = "https://github.com/vim-airline/vim-airline.git"
